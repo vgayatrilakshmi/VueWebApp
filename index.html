@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" >
+	<head>
+    	<meta charset="UTF-8">
+    	<title>Vue App</title>
+    	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'>
+    	<link rel='stylesheet prefetch' href='https://unpkg.com/vuetify/dist/vuetify.min.css'>
+    	<script src = "https://unpkg.com/vue/dist/vue.js"></script>
+    	<script src = "js/main.js" defer></script>
+    	<script src="https://unpkg.com/vuetify/dist/vuetify.min.js"></script>
+    	<link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet">
+	</head>
+	<body>
+    	<div id="app">
+        	<div>
+           		<v-app centered>
+               		<v-toolbar app><v-toolbar-title>Employee Directory</v-toolbar-title></v-toolbar>
+               		<br/><br/><br/>
+               		<v-card-title>
+                 		<v-dialog v-model="dialog" max-width="500px">
+	                    	<v-btn slot="activator" color="primary" dark class="mb-2">New Employee</v-btn>
+	                    	<v-card>
+	                        	<v-card-title><span class="headline">{{ formTitle }}</span></v-card-title>
+	                        <v-card-text>
+	                        	<v-container grid-list-md>
+	                            	<v-layout wrap>
+	                                	<v-flex xs12 sm6 md4>
+	                                    	<v-text-field v-model="editedItem.Fname" label="First Name"></v-text-field>
+	                                	</v-flex>
+	                                 	<v-flex xs12 sm6 md4>
+	                                    	<v-text-field v-model="editedItem.Lname" label="Last Name"></v-text-field>
+	                                 	</v-flex>
+	                                 	<v-flex xs12 sm6 md4>
+	                                    	<v-text-field v-model="editedItem.Mname" label="Middle Name"></v-text-field>
+	                                 	</v-flex>
+	                              	</v-layout>
+	                           </v-container>
+	                        </v-card-text>
+	                        <v-card-actions>
+	                           <v-spacer></v-spacer>
+	                           <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
+	                           <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
+	                        </v-card-actions>
+	                    	</v-card>
+                		</v-dialog>
+                  		<v-spacer></v-spacer>
+                  		<v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details> </v-text-field>
+               		</v-card-title>
+
+                	<v-data-table :headers="headers" :items="employees" class="elevation-1" :search="search">
+                  		<template slot="items" slot-scope="props">
+                     		<td>{{ props.item.Fname }}</td>
+                     		<td>{{ props.item.Lname }}</td>
+                     		<td>{{ props.item.Mname }}</td>
+                     		<td>
+		                        <v-btn icon @click="editItem(props.item)">
+		                           <v-icon color="teal">edit</v-icon>
+		                        </v-btn>
+		                        <v-btn icon @click="deleteItem(props.item)">
+		                           <v-icon color="pink">delete</v-icon>
+		                        </v-btn>
+		                    </td>
+                 		 </template>
+
+                  		<template slot="no-data">
+		                    <v-btn color="primary" @click="initialize">Reset</v-btn>
+		                </template>
+
+                 		<v-alert slot="no-results" :value="true" color="error" icon="warning">
+                     		Your search for "{{ search }}" found no results.
+                  		</v-alert>
+               		</v-data-table>
+        		</div>
+        	</v-app>
+      	</div>
+		<script src='https://unpkg.com/vue/dist/vue.js'></script>
+		<script src='https://unpkg.com/vuetify/dist/vuetify.min.js'></script>
+		<script  src="js/index.js"></script>
+	</body>
+</html>
